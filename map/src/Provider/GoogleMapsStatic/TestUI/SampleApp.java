@@ -38,8 +38,7 @@ private BufferedImage _img;
 /** this might be null. holds the text in case image doesn't display */
 private String _respStr;
 
-//-------------------add countries-------------------------
-private String[] countries = {"Canada","China","USA"};
+
 
 //XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 // main method...
@@ -329,30 +328,6 @@ private String delong(){
 	 return Double.toString(lo);
 }
 
-/*private int getk(){
-	int k = 0;
-	if (jcmbcity.getSelectedItem().equals("Ottawa"))
-		k=1;
-	{
-		ttfLat.setText("-75.42");
-		ttfLon.setText("45.25");
-		}
-	else if (jcmbcity.getSelectedItem().equals("Toronto"))
-		k = 2;
-	{
-		ttfLat.setText("-79.23");
-		ttfLon.setText("43.39");
-		}
-	else if (jcmbcity.getSelectedItem().equals("Vancouver"))
-		k = 3;
-	{
-		ttfLat.setText("-123.05");
-		ttfLon.setText("49.14");
-		}
-	return k;
-}*/
-
-
 private void initComponents() {
   // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
   // Generated using JFormDesigner non-commercial license
@@ -390,7 +365,7 @@ private void initComponents() {
   btnDeZoom = new JButton();
   btnInLati = new JButton();
   btnDeLati = new JButton();
-  jcmbcountry = new JComboBox(countries);
+
   jcmbcity = new JComboBox();
  
 
@@ -512,7 +487,7 @@ private void initComponents() {
   			panel1.add(label6, new TableLayoutConstraints(2, 2, 2, 2, TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
 
   			//---- ttfZoom ----
-  			ttfZoom.setText("14");
+  			ttfZoom.setText("5");
   			panel1.add(ttfZoom, new TableLayoutConstraints(3, 2, 3, 2, TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
   		}
   		contentPanel.add(panel1, new TableLayoutConstraints(0, 0, 0, 0, TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
@@ -587,77 +562,72 @@ private void initComponents() {
 
   
   	 
-			//-------------jcmbcountry--------------
-			jcmbcountry.setEditable(false);
-			jcmbcountry.setMaximumRowCount(5);
-			jcmbcountry.insertItemAt("select country", 0);
-			jcmbcountry.setSelectedIndex(0);
-
-		    jcmbcountry.addItemListener(new ItemListener(){
-		    	public void itemStateChanged(ItemEvent e) {
-
-					 String[] canada = {"select city","Ottawa","Toronto","Vancouver"};
-				     String[] china = {"select city","Beijing","Shanghai","Hongkong"};
-				     String[] usa = {"select city","Washington D.C.","New York","Los Angeles"};
-
-				     if (e.getSource()==jcmbcountry) {
-
-				            if (jcmbcountry.getSelectedItem().equals("Select country")) {
-				            	jcmbcity.setEnabled(false);
-				            }
-				            else if (jcmbcountry.getSelectedItem().equals("Canada")) {	  
-				            	jcmbcity.setEnabled(true);
-				            	jcmbcity.removeAllItems();
-				                    for (int i = 0; i < canada.length; i++) {
-				                    	jcmbcity.addItem(canada[i]);
-				                    }
-				            }
-				            else if (jcmbcountry.getSelectedItem().equals("China")) {
-				            	jcmbcity.setEnabled(true);
-				            	jcmbcity.removeAllItems();
-				                    for (int i = 0; i < china.length; i++) {
-				                    	jcmbcity.removeItem(china[i]);
-				                    	jcmbcity.addItem(china[i]);
-				                    }
-				            } else if (jcmbcountry.getSelectedItem().equals("USA")) {
-				            	jcmbcity.setEnabled(true);
-				            	jcmbcity.removeAllItems();
-				                    for (int i = 0; i < usa.length; i++) {
-				                    	jcmbcity.addItem(usa[i]);
-				                    }
-				            }
-				    }
-		    	
-				    else if(e.getSource()== jcmbcity){
-					if (jcmbcity.getSelectedItem().equals("Select country")) {
-		            	jcmbcity.setEnabled(false);
-		            	ttfLat.setText(null);
-		            	ttfLon.setText(null);
-		            }
-					else if (jcmbcity.getSelectedItem().equals("Ottawa")) {
-		            	ttfLat.setText("-75.42");
-		            	ttfLon.setText("45.25");
-		                    }
-					else if (jcmbcity.getSelectedItem().equals("Toronto")) {
-		            	ttfLat.setText("-79.23");
-		            	ttfLon.setText("43.39");
-		                    }
-					else if (jcmbcity.getSelectedItem().equals("Vancouver")) {
-		            	ttfLat.setText("-123.05");
-		            	ttfLon.setText("49.14");
-							}
-					}
-		    	}
-		    });
-			panel1.add(jcmbcountry, new TableLayoutConstraints(0,3,0, 3, TableLayoutConstraints.LEFT, TableLayoutConstraints.LEFT));
-
 			//-------------jcmbcity--------------
+		
+					CityList = new String [9];
+					CityList [0] = "Ottawa";
+					CityList [1] = "Toronto";
+					CityList [2] = "Vancouver";
+					CityList [3] = "Beijing";
+					CityList [4] = "Shanghai";
+					CityList [5] = "Hongkong";
+					CityList [6] = "Washington D.C.";
+					CityList [7] = "New York";
+					CityList [8] = "Los Angeles";
+		
+		    jcmbcity = new JComboBox (CityList);
+		    jcmbcity.addItemListener(new ItemListener(){
+		    	public void itemStateChanged(ItemEvent e) {
+		
+		    int Selection;
+		    Selection = jcmbcity.getSelectedIndex();
+		    if (Selection == 1) {
+		    	ttfLat.setText("45.25");
+            	ttfLon.setText("-75.43");
+		    } else if (Selection == 2) {
+		    	ttfLat.setText("43.39");
+            	ttfLon.setText("-79.23");
+		    } else if (Selection == 3) {
+		    	ttfLat.setText("49.14");
+            	ttfLon.setText("-123.05");
+		    } 
+		    else if (Selection == 4) {
+		    	ttfLat.setText("39.55");
+            	ttfLon.setText("116.23");
+		    } 
+		    else if (Selection == 5) {
+		    	ttfLat.setText("31.2");
+            	ttfLon.setText("121.4");
+		    } 
+		    else if (Selection == 6) {
+		    	ttfLat.setText("22.15");
+            	ttfLon.setText("114.15");
+		    } 
+		    else if (Selection == 7) {
+		    	ttfLat.setText("38.914");
+            	ttfLon.setText("-77.013");
+		    } 
+		    else if (Selection == 8) {
+		    	ttfLat.setText("40.43");
+            	ttfLon.setText("-74.00");
+		    } 
+		    else if (Selection == 9) {
+		    	ttfLat.setText("34.04");
+            	ttfLon.setText("-118.05");
+		    } 
+		  }
+		    }
+		  );
+		    
+			//panel1.add(jcmbcountry, new TableLayoutConstraints(0,3,0, 3, TableLayoutConstraints.LEFT, TableLayoutConstraints.LEFT));
+
+			
 
 			jcmbcity.setEditable(false);
 			jcmbcity.setMaximumRowCount(5);
 			jcmbcity.insertItemAt("select city", 0);
 			jcmbcity.setSelectedIndex(0);
-			
+
 			panel1.add(jcmbcity, new TableLayoutConstraints(1,3,1, 3, 
 					TableLayoutConstraints.LEFT, TableLayoutConstraints.LEFT));
 
@@ -769,12 +739,12 @@ private JButton btnInZoom;
 private JButton btnDeZoom;
 private JButton btnInLati;
 private JButton btnDeLati;
-private JComboBox jcmbcountry;
+
 private JComboBox jcmbcity;
 /*private JSpinner spinnerLati;
 private JSpinner spinnerLong;
 private JSpinner spinnerzoom;
 private SpinnerModel latiModel;*/
-
+private String [] CityList;
 // JFormDesigner - End of variables declaration  //GEN-END:variables
 }
