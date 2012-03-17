@@ -366,9 +366,13 @@ private void initComponents() {
   btnInLati = new JButton();
   btnDeLati = new JButton();
   labelcity = new JLabel();
+  labelcountry = new JLabel();
   jcmbcity = new JComboBox();
- 
-
+  jcmbcountry = new JComboBox();
+  btnSaveLocation = new JButton();
+  fc = new JFileChooser();
+   log = new JTextArea();
+   
  /*latiModel = new SpinnerNumberModel(Integer.parseInt(ttfLat.getText()),
 		 -180,
 		 180,
@@ -565,8 +569,55 @@ private void initComponents() {
 			//-------------labelcity-------------------
 			labelcity.setText("City");
 			labelcity.setHorizontalAlignment(SwingConstants.RIGHT);
-  			panel1.add(labelcity, new TableLayoutConstraints(0, 3, 0, 3, TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
+  			panel1.add(labelcity, new TableLayoutConstraints(2, 3, 2, 3, TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
+  			
+  		//-------------labelcountry-------------------
+  			labelcountry.setText("Country");
+  			labelcountry.setHorizontalAlignment(SwingConstants.RIGHT);
+  			panel1.add(labelcountry, new TableLayoutConstraints(0, 3, 0, 3, TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
 			
+  			//---------------jcmbcountry-------------
+  			String[] countryList={"Select","Canada","China","USA"};
+  			jcmbcountry =new JComboBox(countryList);
+
+  			jcmbcountry.addItemListener(new ItemListener(){
+  			    public void itemStateChanged(ItemEvent e) {
+  			  
+  			   String canada[] = {"Select","Ottawa","Toronto","Vancouver"};
+  			   String china[] = {"Select","Beijing","Shanghai","Hongkong"};
+  			   String usa[] = {"Select","Washington D.C.","New York","Los Angeles"};
+  			   
+  			   if(e.getSource()==jcmbcountry){
+  				   if(jcmbcountry.getSelectedItem().equals("Select")){
+  					   jcmbcity.setEnabled(false); }
+  				   else if(jcmbcountry.getSelectedItem().equals("Canada")){
+  					   jcmbcity.setEnabled(true);
+  					   jcmbcity.removeAllItems();
+  					   	for(int i=0;i<canada.length;i++){
+  					   		jcmbcity.addItem(canada[i]);
+  					   	}
+  				   }
+  				   else if(jcmbcountry.getSelectedItem().equals("China")){
+  					   jcmbcity.setEnabled(true);
+  					   jcmbcity.removeAllItems();
+  					   	for(int i=0;i<china.length;i++)
+  					   	{
+  					   		jcmbcity.addItem(china[i]);
+  					   	}
+  				   }
+  				   else if(jcmbcountry.getSelectedItem().equals("USA")){
+  					   jcmbcity.setEnabled(true);
+  					   jcmbcity.removeAllItems();
+  					   	for(int i=0;i<usa.length;i++)
+  					   	{
+  					   		jcmbcity.addItem(usa[i]);
+  					   	}
+  				   }
+  				   }
+  			   }
+  			    });
+  			   panel1.add(jcmbcountry, new TableLayoutConstraints(1,3,1,3, TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
+
   			//-------------jcmbcity--------------
 		
 					CityList = new String [9];
@@ -586,6 +637,30 @@ private void initComponents() {
 		
 		    int Selection;
 		    Selection = jcmbcity.getSelectedIndex();
+		    if(jcmbcountry.getSelectedItem().equals("China")&& jcmbcity.getSelectedIndex()==1)
+		    {
+		    	Selection = 4;	
+		    }
+		    if(jcmbcountry.getSelectedItem().equals("China")&& jcmbcity.getSelectedIndex()==2)
+		    {
+		    	Selection = 5;	
+		    }
+		    if(jcmbcountry.getSelectedItem().equals("China")&& jcmbcity.getSelectedIndex()==3)
+		    {
+		    	Selection = 6;	
+		    }
+		    if(jcmbcountry.getSelectedItem().equals("USA")&& jcmbcity.getSelectedIndex()==1)
+		    {
+		    	Selection = 7;	
+		    }
+		    if(jcmbcountry.getSelectedItem().equals("USA")&& jcmbcity.getSelectedIndex()==2)
+		    {
+		    	Selection = 8;	
+		    }
+		    if(jcmbcountry.getSelectedItem().equals("USA")&& jcmbcity.getSelectedIndex()==3)
+		    {
+		    	Selection = 9;	
+		    }
 		    if (Selection == 1) {
 		    	ttfLat.setText("45.25");
             	ttfLon.setText("-75.43");
@@ -630,7 +705,28 @@ private void initComponents() {
 			jcmbcity.insertItemAt("select city", 0);
 			jcmbcity.setSelectedIndex(0);
 
-			panel1.add(jcmbcity, new TableLayoutConstraints(1,3,1, 3, 
+			panel1.add(jcmbcity, new TableLayoutConstraints(3,3,3, 3, 
+					TableLayoutConstraints.LEFT, TableLayoutConstraints.LEFT));
+			
+			//--------------------btnSaveLocation--------------------------
+			btnSaveLocation = new JButton("Save a Location");
+			btnSaveLocation.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					if (e.getSource() == btnSaveLocation) {
+			           // int returnVal = fc.showSaveDialog();
+			            //if (returnVal == JFileChooser.APPROVE_OPTION) {
+			             //   File file = fc.getSelectedFile();
+			                //This is where a real application would save the file.
+			              //  log.append("Saving: " + file.getName() + "." + "\n");
+			           // } else {
+			           //     log.append("Save command cancelled by user." + "\n");
+			           // }
+			            log.setCaretPosition(log.getDocument().getLength());
+			        }
+				}
+			});
+
+			panel1.add(btnSaveLocation, new TableLayoutConstraints(6,3,6, 3, 
 					TableLayoutConstraints.LEFT, TableLayoutConstraints.LEFT));
 
 		//======== scrollPane1 ========
@@ -742,11 +838,16 @@ private JButton btnDeZoom;
 private JButton btnInLati;
 private JButton btnDeLati;
 private JLabel  labelcity;
+private JLabel labelcountry;
 private JComboBox jcmbcity;
+private JComboBox jcmbcountry;
 /*private JSpinner spinnerLati;
 private JSpinner spinnerLong;
 private JSpinner spinnerzoom;
 private SpinnerModel latiModel;*/
 private String [] CityList;
+private JButton btnSaveLocation;
+private JFileChooser fc;
+private JTextArea log;
 // JFormDesigner - End of variables declaration  //GEN-END:variables
 }
