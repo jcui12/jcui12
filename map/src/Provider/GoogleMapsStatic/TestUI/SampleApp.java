@@ -365,7 +365,7 @@ private void initComponents() {
   btnDeZoom = new JButton();
   btnInLati = new JButton();
   btnDeLati = new JButton();
-
+  labelcity = new JLabel();
   jcmbcity = new JComboBox();
  
 
@@ -562,7 +562,12 @@ private void initComponents() {
 
   
   	 
-			//-------------jcmbcity--------------
+			//-------------labelcity-------------------
+			labelcity.setText("City");
+			labelcity.setHorizontalAlignment(SwingConstants.RIGHT);
+  			panel1.add(labelcity, new TableLayoutConstraints(0, 3, 0, 3, TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
+			
+  			//-------------jcmbcity--------------
 		
 					CityList = new String [9];
 					CityList [0] = "Ottawa";
@@ -619,10 +624,7 @@ private void initComponents() {
 		    }
 		  );
 		    
-			//panel1.add(jcmbcountry, new TableLayoutConstraints(0,3,0, 3, TableLayoutConstraints.LEFT, TableLayoutConstraints.LEFT));
-
 			
-
 			jcmbcity.setEditable(false);
 			jcmbcity.setMaximumRowCount(5);
 			jcmbcity.insertItemAt("select city", 0);
@@ -739,7 +741,7 @@ private JButton btnInZoom;
 private JButton btnDeZoom;
 private JButton btnInLati;
 private JButton btnDeLati;
-
+private JLabel  labelcity;
 private JComboBox jcmbcity;
 /*private JSpinner spinnerLati;
 private JSpinner spinnerLong;
