@@ -22,9 +22,11 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.*;
 import java.beans.*;
+import java.io.*;
 import java.math.BigDecimal;
 import java.text.*;
 import java.util.concurrent.*;
+
 
 /** @author nazmul idris */
 public class SampleApp extends JFrame {
@@ -713,15 +715,30 @@ private void initComponents() {
 			btnSaveLocation.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					if (e.getSource() == btnSaveLocation) {
-			           // int returnVal = fc.showSaveDialog();
-			            //if (returnVal == JFileChooser.APPROVE_OPTION) {
-			             //   File file = fc.getSelectedFile();
-			                //This is where a real application would save the file.
-			              //  log.append("Saving: " + file.getName() + "." + "\n");
-			           // } else {
-			           //     log.append("Save command cancelled by user." + "\n");
-			           // }
-			            log.setCaretPosition(log.getDocument().getLength());
+						
+					    int rval = fc.showSaveDialog(fc);
+						 if(rval == JFileChooser.APPROVE_OPTION) {
+
+					            File file = fc.getSelectedFile();
+
+					            try {
+					            	String latitude = ttfLat.getText();
+					            	String longitude = ttfLon.getText();
+					                //File out_file = new File(file);
+					                BufferedWriter out = new BufferedWriter(new FileWriter(file));
+					                out.write("latitude: "+ latitude + " longitude: "+ longitude);
+					               
+					                out.flush();
+					                out.close();
+					            } catch(IOException ex) {
+					            	System.out.println("Exception ");  
+					            }
+					        }
+
+					        else {
+					            // Do nothing
+					            System.out.println("The user choose not to save anything");
+					        }
 			        }
 				}
 			});
